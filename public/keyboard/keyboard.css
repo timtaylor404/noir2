@@ -1,0 +1,16 @@
+key {
+    display: inline-block;
+    height: 40px;
+    background-color: darkslategrey;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #f57c00;
+}
+
+key:hover {
+    background-color: #d1c4e9;
+}
+
+#keyboard {
+    display: flex;
+}
