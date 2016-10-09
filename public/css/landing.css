@@ -1,4 +1,6 @@
 body {
-    background-image: "/public/images/peachBack.png";
+    background-image: url("/images/peachBack.png");
     margin-top: 0 auto;
-};
+}
+
+;
