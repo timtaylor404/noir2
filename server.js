@@ -2,6 +2,7 @@ require('colors') // awesome colors in your console logs!
 
 var config = require('./package'),
     express = require('express'), // our framework!
+    io = require('socket.io'), // socket.io for websocketed
     bodyParser = require('body-parser'), // used for POST routes to obtain the POST payload as a property on `req`
     path = require('path'), // used to resolve paths across OSes
     logger = require('morgan')('dev'), // log the routes being accessed by the frontend
@@ -18,7 +19,7 @@ var config = require('./package'),
         cookieName: config.name, // cookie name (within document.cookies on the Frontend)
         secret: 'My$uP3R@W3$0M3$3CR3+', // encryption secret
         requestKey: 'session', // stores the session cookie in req.session
-        duration: (86400 * 1000) * 7, // one week in milliseconds
+        duration: 7, // one week in milliseconds
         cookie: {
             ephemeral: false, // when true, cookie expires when the browser closes
             httpOnly: true, // when true, cookie is not accessible from javascript

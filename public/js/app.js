@@ -150,4 +150,4 @@ angular.module('app.keymap', [])
                 keys: keys,
                 actions: actions
             }
-        }) Contact GitHub API Training Shop Blog About
+        });
