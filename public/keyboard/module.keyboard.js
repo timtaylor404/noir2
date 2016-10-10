@@ -1,4 +1,4 @@
-angular.module('module.keyboard', ['ngSanitize'])
+angular.module('module.keyboard', ['ngSanitize'],['onScreenKeyboard'])
     .controller('controller.keyboard', function() {
         console.info('controller.keyboard loaded');
 
