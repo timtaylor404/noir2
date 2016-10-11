@@ -34,15 +34,15 @@ app.use(logger); // mounting dev logging
 app.use(sessions); // mounting HTTPs session cookies
 app.use(fileserver);
 
-var socketServer = io(server); //establishing a name for server
+// var socketServer = io(server); //establishing a name for server
 
-socketServer.on('connection', (socket) => {
-    socket.on('', () => {});
-    socket.on('', () => {});
-    socket.on('', () => {});
+// socketServer.on('connection', (socket) => {
+//     socket.on('', () => {});
+//     socket.on('', () => {});
+//     socket.on('', () => {});
 
-    socketServer.emit('data', data)
-});
+//     socketServer.emit('data', data)
+// });
 
 
 // enable server-side rendering

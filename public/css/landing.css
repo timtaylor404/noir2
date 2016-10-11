@@ -1,11 +1,15 @@
-body {
-    background-image: url("/images/landing
- .png");
-
-}
-
-.btn {
-    margin: 0 auto;
-    margin-top: 20%;
-    color: peachpuff;
-}
+        body {
+            background-image: url("/images/peachBack.png");
+            margin: 0 auto;
+        }
+        
+        .btn {
+            margin: 0 auto;
+            margin-top: 20%;
+            color: peachpuff;
+        }
+        
+        img {
+            margin: 0 auto;
+            margin-top: 10%;
+        }
