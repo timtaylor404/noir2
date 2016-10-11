@@ -1,30 +1,30 @@
 /* global angular:false */
 angular.module('onScreenKeyboard', ['ngSanitize'])
-    .directive('onScreenKeyboard', function ($timeout, $document) {
-      'use strict';
-      
+    .directive('onScreenKeyboard', function($timeout, $document) {
+        'use strict';
+
         return {
             restrict: 'E',
             bindToController: true,
             controllerAs: 'ctrl',
             scope: {
-                rows : '=?',
-                uppercaseAllWords : '@',
+                rows: '=?',
+                uppercaseAllWords: '@',
             },
-            controller: function($sce){
+            controller: function($sce) {
                 var ctrl = this;
 
-                if (!ctrl.rows){
+                if (!ctrl.rows) {
                     ctrl.rows = [
-                        ['1', '2', '3', '4','5','6','7','8', '9', '0', {type: 'erase', colspan: 2, text: '&lArr;'}],
-                        ['q','w','e','r','t','y','u','i','o','p','@'],
-                        ['a','s','d','f','g','h','j','k','l','-','_', {type: 'margin'}],
-                        [{type: 'shift', upperCase: '&dArr;', lowerCase: '&uArr;'}, 'z','x','c','v','b','n','m',',', '.',{type: 'shift', upperCase: '&dArr;', lowerCase: '&uArr;'}],
-                        [{type: 'margin'}, {type: 'space', colspan: 9, text: ' '}]
+                        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', { type: 'erase', colspan: 2, text: '&lArr;' }],
+                        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '@', { type: 'up-arrow', text: '&utrif;' }],
+                        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '-', '_', { type: 'margin' }],
+                        [{ type: 'shift', upperCase: '&dArr;', lowerCase: '&uArr;' }, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', { type: 'shift', upperCase: '&dArr;', lowerCase: '&uArr;' }],
+                        [{ type: 'margin' }, { type: 'space', colspan: 9, text: ' ' }]
                     ];
                 }
 
-                ctrl.getText = function(key){
+                ctrl.getText = function(key) {
                     if (key.type === 'margin')
                         return '';
 
@@ -32,9 +32,9 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
 
                     if (key.text)
                         val = key.text;
-                    else  if (key.lowerCase && !ctrl.isUpperCase)
+                    else if (key.lowerCase && !ctrl.isUpperCase)
                         val = key.lowerCase;
-                    else  if (key.upperCase && ctrl.isUpperCase)
+                    else if (key.upperCase && ctrl.isUpperCase)
                         val = key.upperCase;
                     else {
                         val = ctrl.isUpperCase ? key.toUpperCase() : key.toLowerCase();
@@ -46,24 +46,24 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                     return val;
                 };
             },
-            link: function (scope, element, attr) {
+            link: function(scope, element, attr) {
                 var ctrl = scope.ctrl;
                 ctrl.isUpperCase = false;
                 ctrl.lastInputCtrl = null;
                 ctrl.startPos = null;
                 ctrl.endPos = null;
 
-                ctrl.printKeyStroke = function(key, event){
+                ctrl.printKeyStroke = function(key, event) {
                     if (!ctrl.lastInputCtrl)
                         return;
 
                     ctrl.startPos = ctrl.lastInputCtrl.selectionStart;
                     ctrl.endPos = ctrl.lastInputCtrl.selectionEnd;
 
-                    if (key.type === 'erase'){
+                    if (key.type === 'erase') {
                         ctrl.eraseKeyStroke();
                         return;
-                    } else if (key.type === 'shift'){
+                    } else if (key.type === 'shift') {
                         ctrl.isUpperCase = !ctrl.isUpperCase;
                         return;
                     }
@@ -83,11 +83,11 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                     ctrl.setKeyboardLayout();
                 };
 
-                ctrl.refocus = function () {
+                ctrl.refocus = function() {
                     ctrl.lastInputCtrl.focus();
                 };
 
-                ctrl.eraseKeyStroke = function () {
+                ctrl.eraseKeyStroke = function() {
                     if (!ctrl.lastInputCtrl)
                         return;
 
@@ -103,8 +103,7 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
 
                     if (hasSel) {
                         ctrl.endPos = ctrl.startPos;
-                    }
-                    else {
+                    } else {
                         ctrl.startPos--;
                         ctrl.endPos--;
                     }
@@ -114,24 +113,22 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                     ctrl.refocus();
                 };
 
-                ctrl.setKeyboardLayout = function () {
-                    if (!ctrl.lastInputCtrl){
+                ctrl.setKeyboardLayout = function() {
+                    if (!ctrl.lastInputCtrl) {
                         ctrl.isUpperCase = true;
                         return;
-                    }
-                    else if (ctrl.lastInputCtrl.className && ctrl.isUpperCase)
+                    } else if (ctrl.lastInputCtrl.className && ctrl.isUpperCase)
                         ctrl.isUpperCase = false;
                     else if (angular.element(ctrl.lastInputCtrl).val().length === 0) {
                         ctrl.isUpperCase = true;
-                    }
-                    else if (angular.element(ctrl.lastInputCtrl).val().slice(-1) === ' ' && !ctrl.isUpperCase && attr.uppercaseAllWords !== undefined)
+                    } else if (angular.element(ctrl.lastInputCtrl).val().slice(-1) === ' ' && !ctrl.isUpperCase && attr.uppercaseAllWords !== undefined)
                         ctrl.isUpperCase = true;
-                    else{
+                    else {
                         ctrl.isUpperCase = false;
                     }
                 };
 
-                var focusin = function(event){
+                var focusin = function(event) {
                     var e = event.target || event.srcElement;
 
                     if (e.tagName === 'INPUT' || e.tagName === 'TEXTAREA') {
@@ -141,7 +138,7 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                     }
                 };
 
-                var keyup = function(){
+                var keyup = function() {
                     if (!ctrl.lastInputCtrl)
                         return;
 
@@ -160,14 +157,14 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                     $document.unbind('keyup', keyup);
                 });
 
-                element.bind('contextmenu', function (event) {
+                element.bind('contextmenu', function(event) {
                     event.preventDefault();
                     return false;
                 });
 
-                $timeout(function(){
+                $timeout(function() {
                     ctrl.isUpperCase = true;
-                },0);
+                }, 0);
             },
             templateUrl: '/templates/angular-on-screen-keyboard.html'
         };

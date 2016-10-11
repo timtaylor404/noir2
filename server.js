@@ -26,13 +26,24 @@ var config = require('./package'),
             secure: false // when true, cookie will only be sent over SSL;
         }
     }),
-    app = express(), // initialize express
+    app = express(), // initialize express 
     port = process.env.PORT || 1337; // server port
 
 // server setup
 app.use(logger); // mounting dev logging
 app.use(sessions); // mounting HTTPs session cookies
 app.use(fileserver);
+
+var socketServer = io(server); //establishing a name for server
+
+socketServer.on('connection', (socket) => {
+    socket.on('', () => {});
+    socket.on('', () => {});
+    socket.on('', () => {});
+
+    socketServer.emit('data', data)
+});
+
 
 // enable server-side rendering
 app.set('view engine', 'ejs');
