@@ -34,17 +34,7 @@ app.use(logger); // mounting dev logging
 app.use(sessions); // mounting HTTPs session cookies
 app.use(fileserver);
 
-// var socketServer = io(server); //establishing a name for server
-
-// socketServer.on('connection', (socket) => {
-//     socket.on('', () => {});
-//     socket.on('', () => {});
-//     socket.on('', () => {});
-
-//     socketServer.emit('data', data)
-// });
-
-
+//////////////////////////////////////////////////////// E N D  S O C K E T////////////////////////////////
 // enable server-side rendering
 app.set('view engine', 'ejs');
 
@@ -54,6 +44,25 @@ app.post('*', bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 require('./routes')(app); // do all the routing stuff in a separate file by passing a reference of the app!
 
 // start the server
-app.listen(port, () => {
+var server = app.listen(port, () => {
     console.log('Login Server Started on port:', port.toString().cyan)
+});
+
+///////////////////////////////////////////////////// S O C K E T S ///////////////////////////////////////
+var socketServer = io(server); //establishing a name for server
+
+socketServer.on('connection', (socket) => {
+    console.log('Socket Served port:', port);
+
+    socket.on('input.keypress', (evt) => {
+        console.log('keypress works', evt);
+        socketServer.emit('keyPressed', evt);
+
+    });
+
+
+    // socket.on('', () => {});
+    // socket.on('', () => {});
+
+    //     socketServer.emit('data', data)
 });

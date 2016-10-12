@@ -165,6 +165,7 @@ angular.module('onScreenKeyboard', ['ngSanitize'])
                 $timeout(function() {
                     ctrl.isUpperCase = true;
                 }, 0);
+
             },
             templateUrl: '/templates/angular-on-screen-keyboard.html'
         };
